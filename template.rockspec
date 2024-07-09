@@ -42,9 +42,11 @@ build = {
   type = 'builtin',
   copy_directories = $copy_directories,
   modules = {
-    sources = {
+    rime = {
+      sources = {
         "module.c"
-    },
+      }
+    }
   },
 
   incdirs = {
