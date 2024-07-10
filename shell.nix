@@ -7,5 +7,7 @@ mkShell {
   buildInputs = [
     pkg-config
     librime
+    luajit
+    xmake
   ];
 }
