@@ -76,15 +76,9 @@ $ luarocks --lua-version 5.1 --local --tree ~/.local/share/nvim/rocks install ro
 By default:
 
 ```lua
-local prefix = os.getenv('PREFIX')
-if prefix == nil then
-    prefix = '/usr'
-end
-local home = os.getenv('HOME')
-local tmpdir = os.getenv('TMPDIR')
-if tmpdir == nil then
-    tmpdir = '/tmp'
-end
+local prefix = os.getenv('PREFIX') or '/usr'
+local home = os.getenv('HOME') or '.'
+local tmpdir = os.getenv('TMPDIR') or '/tmp'
 local dir
 local shared_data_dir
 for _, dir in ipairs({prefix .. '/share/rime-data', '/usr/local/share/rime-data', '/run/current-system/sw/share/rime-data', '/sdcard/rime-data'}) do
