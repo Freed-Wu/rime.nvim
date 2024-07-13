@@ -45,19 +45,19 @@ build = {
     rime = {
       sources = {
         "module.c"
+      },
+
+      incdirs = {
+        "$(RIME_INCDIR)",
+      },
+
+      libdirs = {
+        "$(RIME_LIBDIR)",
+      },
+
+      libraries = {
+        "rime"
       }
     }
-  },
-
-  incdirs = {
-    "$(RIME_INCDIR)",
-  },
-
-  libdirs = {
-    "$(RIME_LIBDIR)",
-  },
-
-  libraries = {
-    "rime"
-  },
+  }
 }
