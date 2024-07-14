@@ -73,45 +73,51 @@ $ luarocks --lua-version 5.1 --local --tree ~/.local/share/nvim/rocks install ro
 
 ## Configure
 
-By default:
+By default,
 
 ```lua
 local prefix = os.getenv('PREFIX') or '/usr'
 local home = os.getenv('HOME') or '.'
 local tmpdir = os.getenv('TMPDIR') or '/tmp'
-local dir
-local shared_data_dir
+local shared_data_dir = ""
 for _, dir in ipairs({prefix .. '/share/rime-data', '/usr/local/share/rime-data', '/run/current-system/sw/share/rime-data', '/sdcard/rime-data'}) do
     if vim.fn.isdirectory(dir) then
         shared_data_dir = dir
     end
 end
-local user_data_dir
+local user_data_dir = ""
 for _, dir in ipairs({home .. '/.config/ibus/rime', home .. '/.local/share/fcitx5/rime', home .. '/.config/fcitx/rime', home .. '/sdcard/rime'}) do
     if vim.fn.isdirectory(dir) then
         user_data_dir = dir
     end
 end
-require('rime').setup(
-    traits = {
-        shared_data_dir = shared_data_dir,
-        user_data_dir = user_data_dir,
-        log_dir = tmpdir .. '/rime',
-        distribution_name = 'Rime',
-        distribution_code_name = 'nvim-rime',
-        distribution_version = '0.0.1',
-        app_name = 'rime.nvim-rime',
-        min_log_level = 3,
-    },
-    ui = {
-        indices = {'①' '②' '③' '④' '⑤' '⑥' '⑦' '⑧' '⑨' '⓪'},
-        left = '<|',
-        right = '|>',
-        left_sep = '[',
-        right_sep = ']',
-        cursor = '|',
+require('nvim-rime').setup({
+        traits = {
+            shared_data_dir = shared_data_dir,
+            user_data_dir = user_data_dir,
+            log_dir = tmpdir .. '/rime',
+            distribution_name = 'Rime',
+            distribution_code_name = 'nvim-rime',
+            distribution_version = '0.0.1',
+            app_name = 'rime.nvim-rime',
+            min_log_level = 3,
+        },
+        ui = {
+            indices = {'①', '②', '③', '④', '⑤', '⑥', '⑦', '⑧', '⑨', '⓪'},
+            left = '<|',
+            right = '|>',
+            left_sep = '[',
+            right_sep = ']',
+            cursor = '|',
+        }
     }
 )
+```
+
+Set keymap:
+
+```lua
+vim.api.nvim_set_keymap('i', '<C-^>', '', {noremap = true, callback = require('nvim-rime').toggle}
 ```
 
 ## Similar Projects
