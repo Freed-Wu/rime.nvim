@@ -86,11 +86,7 @@ static int processKey(lua_State *L) {
   RimeSessionId session_id = lua_tointeger(L, 1);
   int key = lua_tointeger(L, 2);
   int mask = lua_tointeger(L, 3);
-  Bool ret = RimeProcessKey(session_id, key, mask);
-  if (!ret)
-    fprintf(stderr, "cannot process key %d and mask %d for session %lu\n", key,
-            mask, session_id);
-  lua_pushboolean(L, ret);
+  lua_pushboolean(L, RimeProcessKey(session_id, key, mask));
   return 1;
 }
 
