@@ -44,7 +44,7 @@ build = {
   modules = {
     rime = {
       sources = {
-        "module.c"
+        "rime.c"
       },
 
       incdirs = {
