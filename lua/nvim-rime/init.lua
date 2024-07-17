@@ -200,6 +200,7 @@ end
 function M:feed_keys(text)
     vim.v.char = text
     M:win_close()
+    M.preedit = ""
     M:reset_keymaps()
 end
 
