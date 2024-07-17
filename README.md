@@ -129,7 +129,26 @@ Set keymap:
 vim.api.nvim_set_keymap('i', '<C-^>', '', {noremap = true, callback = require('nvim-rime').toggle}
 ```
 
+Once it is enabled, any printable key will be passed to rime in any case while
+any non-printable key will be passed to rime only if rime window is opened. If
+you want to pass a key to rime in any case, try:
+
+```lua
+vim.api.nvim_set_keymap('i', '<C-\\>', '', {noremap = true, callback = require('nvim-rime'):callback('<C-\\>')})
+```
+
+It is useful for some key such as the key for switching input schema.
+
+Once you switch to ascii mode of rime, you **cannot** switch back unless you
+have defined any hotkey to pass the key for switching ascii mode of rime to rime.
+Because only printable key can be passed to rime when rime window is closed.
+
 ## Similar Projects
 
+### Rime for Shell
+
 - [zsh-rime](https://github.com/Freed-Wu/zsh-rime)
+
+### Other Rime for Vim
+
 - [cmp-rime](https://github.com/Ninlives/cmp-rime)
