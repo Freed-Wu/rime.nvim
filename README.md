@@ -34,6 +34,8 @@ Rime for neovim.
 Like [coc-rime](https://github.com/tonyfettes/coc-rime).
 However, use lua not javascript.
 
+![screencast](https://github.com/user-attachments/assets/c188d2e5-d65a-4d60-92a7-a5cad993fc0e)
+
 ## Dependence
 
 - [librime](https://github.com/rime/librime)
