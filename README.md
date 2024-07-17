@@ -79,13 +79,23 @@ By default,
 local prefix = os.getenv('PREFIX') or '/usr'
 local home = os.getenv('HOME') or '.'
 local shared_data_dir = ""
-for _, dir in ipairs({prefix .. '/share/rime-data', '/usr/local/share/rime-data', '/run/current-system/sw/share/rime-data', '/sdcard/rime-data'}) do
+for _, dir in ipairs({
+    prefix .. '/share/rime-data',
+    '/usr/local/share/rime-data',
+    '/run/current-system/sw/share/rime-data',
+    '/sdcard/rime-data'
+}) do
     if vim.fn.isdirectory(dir) == 1 then
         shared_data_dir = dir
     end
 end
 local user_data_dir = ""
-for _, dir in ipairs({home .. '/.config/ibus/rime', home .. '/.local/share/fcitx5/rime', home .. '/.config/fcitx/rime', home .. '/sdcard/rime'}) do
+for _, dir in ipairs({
+    home .. '/.config/ibus/rime',
+    home .. '/.local/share/fcitx5/rime',
+    home .. '/.config/fcitx/rime',
+    home .. '/sdcard/rime'
+}) do
     if vim.fn.isdirectory(dir) == 1 then
         user_data_dir = dir
     end

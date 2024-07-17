@@ -3,15 +3,25 @@ local rime = require "rime"
 local prefix = os.getenv("PREFIX") or "/usr"
 local home = os.getenv("HOME") or "."
 local shared_data_dir = ""
--- luacheck: ignore 113
+-- luacheck: ignore 112 113 212/self
 ---@diagnostic disable: undefined-global
-for _, dir in ipairs({ prefix .. "/share/rime-data", "/usr/local/share/rime-data", "/run/current-system/sw/share/rime-data", "/sdcard/rime-data" }) do
+for _, dir in ipairs({
+    prefix .. "/share/rime-data",
+    "/usr/local/share/rime-data",
+    "/run/current-system/sw/share/rime-data",
+    "/sdcard/rime-data"
+}) do
     if vim.fn.isdirectory(dir) == 1 then
         shared_data_dir = dir
     end
 end
 local user_data_dir = ""
-for _, dir in ipairs({ home .. "/.config/ibus/rime", home .. "/.local/share/fcitx5/rime", home .. "/.config/fcitx/rime", home .. "/sdcard/rime" }) do
+for _, dir in ipairs({
+    home .. "/.config/ibus/rime",
+    home .. "/.local/share/fcitx5/rime",
+    home .. "/.config/fcitx/rime",
+    home .. "/sdcard/rime"
+}) do
     if vim.fn.isdirectory(dir) == 1 then
         user_data_dir = dir
     end
@@ -56,16 +66,19 @@ end
 ---process key
 ---@param key string
 ---@param modifiers string[]
-function M:processKey(key, modifiers)
+function M:process_key(key, modifiers)
+    modifiers = modifiers or {}
     local keycode, mask = require("nvim-rime.parse_key")(key, modifiers)
     return rime.processKey(M.session_id, keycode, mask)
 end
 
 ---process keys
 ---@param keys string
-function M:process_keys(keys)
+---@param modifiers string[]
+function M:process_keys(keys, modifiers)
+    modifiers = modifiers or {}
     for key in keys:gmatch("(.)") do
-        if M:processKey(key, {}) == false then
+        if M:process_key(key, modifiers) == false then
             return false
         end
     end
@@ -76,7 +89,9 @@ end
 ---@param key string
 function M:callback(key)
     return function()
-        return M:draw_ui(key)
+        if M.is_enabled then
+            return M:draw_ui(key)
+        end
     end
 end
 
@@ -195,7 +210,7 @@ function M:draw_ui(key)
         key = vim.v.char
         vim.v.char = ""
     end
-    if M:processKey(key, {}) == false then
+    if M:process_key(key, {}) == false then
         if #key == 1 then
             M:feed_keys(key)
         end
