@@ -143,6 +143,20 @@ Once you switch to ascii mode of rime, you **cannot** switch back unless you
 have defined any hotkey to pass the key for switching ascii mode of rime to rime.
 Because only printable key can be passed to rime when rime window is closed.
 
+## Integration
+
+### [nvim-cmp](https://github.com/hrsh7th/nvim-cmp)
+
+```lua
+require('cmp').setup {
+  -- ...
+  sources = {
+    -- ...
+    { name = 'rime' }
+  }
+}
+```
+
 ## Similar Projects
 
 ### Rime for Shell

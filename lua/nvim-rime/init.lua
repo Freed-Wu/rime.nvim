@@ -306,13 +306,18 @@ function M:clearComposition()
     rime.clearComposition(M.session_id)
 end
 
----enable IME
-function M:enable()
+---initial
+function M:init()
     if M.session_id == 0 then
         vim.fn.mkdir(M.traits.log_dir, "p")
         rime.init(M.traits)
         M.session_id = rime.createSession()
     end
+end
+
+---enable IME
+function M:enable()
+    M:init()
     vim.api.nvim_buf_set_keymap(0, "i", "<Space>", "<Space>", { noremap = true, nowait = true })
     for i = 0x21, 0x7b do
         local key = string.char(i)
@@ -356,6 +361,31 @@ function M:disable()
 
     vim.api.nvim_del_augroup_by_id(M.augroup_id)
     M.is_enabled = false
+end
+
+---get context with all candidates
+---@param keys string
+---@return table
+function M:get_context_with_all_candidates(keys)
+    M:init()
+    M:process_keys(keys, {})
+    local context = rime.getContext(M.sessionId)
+    if (keys ~= '') then
+        local result = context
+        while (not context.menu.is_last_page) do
+            M:process_key('=', {})
+            context = rime.getContext(M.sessionId)
+            result.menu.num_candidates = result.menu.num_candidates + context.menu.num_candidates
+            if (result.menu.select_keys and context.menu.select_keys) then
+                table.insert(result.menu.select_keys, context.menu.select_keys)
+            end
+            if (result.menu.candidates and context.menu.candidates) then
+                table.insert(result.menu.candidates, context.menu.candidates)
+            end
+        end
+    end
+    M:clearComposition()
+    return context
 end
 
 ---toggle IME
