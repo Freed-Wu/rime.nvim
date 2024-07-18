@@ -1,4 +1,4 @@
-#include <lauxlib.h>
+#include <luajit-2.1/lauxlib.h>
 #include <rime_api.h>
 
 #define DEFAULT_BUFFER_SIZE 1024
