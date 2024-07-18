@@ -4,12 +4,10 @@
 add_rules("mode.debug", "mode.release")
 
 add_requires("rime")
-add_requires("luajit")
 
 target("rime")
 do
-    set_kind("shared")
+    add_rules("luarocks.module")
     add_files("*.c")
     add_packages("rime")
-    add_packages("luajit")
 end
