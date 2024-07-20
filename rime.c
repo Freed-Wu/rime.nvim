@@ -26,6 +26,11 @@ static int init(lua_State *L) {
   return 0;
 }
 
+static int finalize(lua_State *L) {
+  RimeFinalize();
+  return 0;
+}
+
 static int createSession(lua_State *L) {
   RimeSessionId session_id = RimeCreateSession();
   if (session_id == 0)
@@ -173,6 +178,7 @@ static const luaL_Reg functions[] = {
     {"getCommit", getCommit},
     {"commitComposition", commitComposition},
     {"clearComposition", clearComposition},
+    {"finalize", finalize},
     {NULL, NULL},
 };
 
