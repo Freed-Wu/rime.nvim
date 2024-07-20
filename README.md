@@ -149,6 +149,8 @@ Because only printable key can be passed to rime when rime window is closed.
 
 ### [nvim-cmp](https://github.com/hrsh7th/nvim-cmp)
 
+Like [cmp-rime](https://github.com/Ninlives/cmp-rime):
+
 ```lua
 require('cmp').setup {
   -- ...
@@ -161,10 +163,4 @@ require('cmp').setup {
 
 ## Similar Projects
 
-### Rime for Shell
-
 - [zsh-rime](https://github.com/Freed-Wu/zsh-rime)
-
-### Other Rime for Vim
-
-- [cmp-rime](https://github.com/Ninlives/cmp-rime)
