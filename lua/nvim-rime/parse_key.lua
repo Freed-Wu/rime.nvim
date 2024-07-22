@@ -1351,7 +1351,8 @@ local modifiers = {
 ---@return integer
 ---@return integer
 return function(key, modifiers_)
-    local keycode = 0
+    local keycode = key:byte()
+    -- convert vim key name to rime key name
     if key:sub(1, 1) == "<" and key:sub(-1) == ">" then
         key = key:sub(2, -2):upper()
             :gsub("-[-]", "-minus")
@@ -1390,15 +1391,14 @@ return function(key, modifiers_)
             key = "Page_" .. key:sub(5, 5):upper() .. key:sub(6)
         end
     end
+    -- convert rime key name to rime key code
     for k, v in pairs(keys) do
         if key == k then
             keycode = v
             break
         end
     end
-    if keycode == 0 and #key == 1 then
-        keycode = key:byte()
-    end
+
     local mask = 0
     for _, modifier_ in ipairs(modifiers_) do
         for i, modifier in ipairs(modifiers) do
