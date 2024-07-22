@@ -40,6 +40,18 @@ However, use lua not javascript.
 
 - [librime](https://github.com/rime/librime)
 
+```sh
+# Ubuntu
+sudo apt-get -y install librime-dev librime1
+sudo apt-mark auto librime-dev
+# ArchLinux
+sudo pacman -S librime
+# Android Termux
+apt-get -y install librime
+# Nix
+# use nix-shell to create a virtual environment then build
+```
+
 ## Install
 
 ### rocks.nvim
