@@ -198,7 +198,17 @@ end
 ---feed keys
 ---@param text string
 function M:feed_keys(text)
-    vim.v.char = text
+    if vim.v.char ~= "" then
+        vim.v.char = text
+    else
+        -- cannot work
+        -- vim.api.nvim_feedkeys(text, 't', true)
+        local cursor = vim.api.nvim_win_get_cursor(0)
+        local r = cursor[1]
+        local c = cursor[2]
+        vim.api.nvim_buf_set_text(0, r - 1, c, r - 1, c, { text })
+        vim.api.nvim_win_set_cursor(0, { r, c + #text })
+    end
     M:win_close()
     M.preedit = ""
     M:reset_keymaps()
@@ -209,7 +219,6 @@ end
 function M:draw_ui(key)
     if key == "" then
         key = vim.v.char
-        vim.v.char = ""
     end
     if M:process_key(key, {}) == false then
         if #key == 1 then
@@ -218,14 +227,15 @@ function M:draw_ui(key)
         return
     end
     local context = rime.getContext(M.session_id)
-    M.preedit = context.composition.preedit or ""
-    local preedit = M.preedit:sub(1, context.composition.cursor_pos) ..
-        M.ui.cursor .. M.preedit:sub(context.composition.cursor_pos + 1)
-    local candidates = context.menu.candidates
     if context.menu.num_candidates == 0 then
         M:feed_keys(M:get_commit_text())
         return
     end
+    vim.v.char = ""
+    M.preedit = context.composition.preedit or ""
+    local preedit = M.preedit:sub(1, context.composition.cursor_pos) ..
+        M.ui.cursor .. M.preedit:sub(context.composition.cursor_pos + 1)
+    local candidates = context.menu.candidates
     local candidates_ = ""
     local indices = M.ui.indices
     for index, _ in ipairs(candidates) do
