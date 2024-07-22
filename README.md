@@ -47,7 +47,7 @@ However, use lua not javascript.
 #### Command style
 
 ```vim
-:Rocks install rocks.nvim
+:Rocks install rime.nvim
 ```
 
 #### Declare style
@@ -56,7 +56,7 @@ However, use lua not javascript.
 
 ```toml
 [plugins]
-"rocks.nvim" = "scm"
+"rime.nvim" = "scm"
 ```
 
 Then
@@ -68,7 +68,7 @@ Then
 or:
 
 ```sh
-$ luarocks --lua-version 5.1 --local --tree ~/.local/share/nvim/rocks install rocks.nvim
+$ luarocks --lua-version 5.1 --local --tree ~/.local/share/nvim/rocks install rime.nvim
 # ~/.local/share/nvim/rocks is the default rocks tree path
 # you can change it according to your vim.g.rocks_nvim.rocks_path
 ```
