@@ -25,12 +25,13 @@ for _, dir in ipairs({
     end
 end
 
-local nowait_keys = { "<Bar>", "}" }
-for i = 0x21, 0x27 do
+local nowait_keys = { "!", "<Bar>", "}" }
+-- "
+for i = 0x23, 0x26 do
     local key = string.char(i)
     table.insert(nowait_keys, key)
 end
--- ()
+-- '()
 for i = 0x2a, 0x7b do
     local key = string.char(i)
     table.insert(nowait_keys, key)
