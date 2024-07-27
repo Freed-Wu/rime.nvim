@@ -35,6 +35,9 @@ local M = {
     win_id = 0,
     buf_id = 0,
     augroup_id = 0,
+    configs = {
+        disable_keys = { " " },
+    },
     traits = {
         shared_data_dir = shared_data_dir,
         user_data_dir = user_data_dir,
@@ -219,6 +222,13 @@ end
 function M:draw_ui(key)
     if key == "" then
         key = vim.v.char
+    end
+    if M.preedit == "" then
+        for _, disable_key in ipairs(M.configs.disable_keys) do
+            if key == disable_key then
+                M:disable()
+            end
+        end
     end
     if M:process_key(key, {}) == false then
         if #key == 1 then
