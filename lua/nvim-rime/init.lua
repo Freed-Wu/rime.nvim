@@ -53,13 +53,13 @@ end
 ---reset keymaps
 function M:reset_keymaps()
     if M.preedit ~= "" and M.has_set_keymaps == false then
-        for _, lhs in ipairs(M.configs.special_keys) do
+        for _, lhs in ipairs(M.keys.special) do
             vim.api.nvim_buf_set_keymap(0, "i", lhs, "",
                 { noremap = true, nowait = true, callback = M:callback(lhs), })
         end
         M.has_set_keymaps = true
     elseif M.preedit == "" and M.has_set_keymaps == true then
-        for _, lhs in ipairs(M.configs.special_keys) do
+        for _, lhs in ipairs(M.keys.special) do
             vim.api.nvim_buf_del_keymap(0, "i", lhs)
         end
         M.has_set_keymaps = false
@@ -92,7 +92,7 @@ function M:draw_ui(key)
         key = vim.v.char
     end
     if M.preedit == "" then
-        for _, disable_key in ipairs(M.configs.disable_keys) do
+        for _, disable_key in ipairs(M.keys.disable) do
             if key == vim.api.nvim_replace_termcodes(disable_key, true, false, true) then
                 M:disable()
             end
@@ -206,7 +206,7 @@ end
 ---enable IME
 function M:enable()
     M:init()
-    for _, nowait_key in ipairs(M.configs.nowait_keys) do
+    for _, nowait_key in ipairs(M.keys.nowait) do
         vim.api.nvim_buf_set_keymap(0, "i", nowait_key, nowait_key, { noremap = true, nowait = true })
     end
 
@@ -229,7 +229,7 @@ end
 
 ---disable IME
 function M:disable()
-    for _, nowait_key in ipairs(M.configs.nowait_keys) do
+    for _, nowait_key in ipairs(M.keys.nowait) do
         vim.api.nvim_buf_del_keymap(0, "i", nowait_key)
     end
 
