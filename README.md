@@ -87,57 +87,12 @@ $ luarocks --lua-version 5.1 --local --tree ~/.local/share/nvim/rocks install ri
 
 ## Configure
 
-By default,
+Refer [config.lua](lua/nvim-rime/config.lua):
 
 ```lua
-local prefix = os.getenv('PREFIX') or '/usr'
-local home = os.getenv('HOME') or '.'
-local shared_data_dir = ""
-for _, dir in ipairs({
-    prefix .. '/share/rime-data',
-    '/usr/local/share/rime-data',
-    '/run/current-system/sw/share/rime-data',
-    '/sdcard/rime-data'
-}) do
-    if vim.fn.isdirectory(dir) == 1 then
-        shared_data_dir = dir
-    end
-end
-local user_data_dir = ""
-for _, dir in ipairs({
-    home .. '/.config/ibus/rime',
-    home .. '/.local/share/fcitx5/rime',
-    home .. '/.config/fcitx/rime',
-    home .. '/sdcard/rime'
-}) do
-    if vim.fn.isdirectory(dir) == 1 then
-        user_data_dir = dir
-    end
-end
 require('nvim-rime').setup({
-        configs = {
-            disable_keys = { "<Space>" },
-        },
-        traits = {
-            shared_data_dir = shared_data_dir,
-            user_data_dir = user_data_dir,
-            log_dir = vim.fs.joinpath(vim.fn.stdpath('data'), 'rime'),
-            distribution_name = 'Rime',
-            distribution_code_name = 'nvim-rime',
-            distribution_version = '0.0.1',
-            app_name = 'rime.nvim-rime',
-            min_log_level = 3,
-        },
-        ui = {
-            indices = {'①', '②', '③', '④', '⑤', '⑥', '⑦', '⑧', '⑨', '⓪'},
-            left = '<|',
-            right = '|>',
-            left_sep = '[',
-            right_sep = ']',
-            cursor = '|',
-        }
-    }
-)
+    -- ...
+})
 ```
 
 Set keymap:
