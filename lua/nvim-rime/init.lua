@@ -3,7 +3,6 @@
 local rime = require "rime"
 local M = require "nvim-rime.config"
 
-local special_keys = { "Up", "Down", "Left", "Right", "Home", "End", "PageUp", "PageDown" }
 
 ---setup
 ---@param conf table
@@ -54,90 +53,14 @@ end
 ---reset keymaps
 function M:reset_keymaps()
     if M.preedit ~= "" and M.has_set_keymaps == false then
-        for _, keyname in ipairs(special_keys) do
-            local lhs = "<" .. keyname .. ">"
-            vim.api.nvim_buf_set_keymap(0, "i", lhs, "",
-                { noremap = true, nowait = true, callback = M:callback(lhs), })
-            lhs = "<C-" .. keyname .. ">"
-            vim.api.nvim_buf_set_keymap(0, "i", lhs, "",
-                { noremap = true, nowait = true, callback = M:callback(lhs), })
-            lhs = "<M-C-" .. keyname .. ">"
-            vim.api.nvim_buf_set_keymap(0, "i", lhs, "",
-                { noremap = true, nowait = true, callback = M:callback(lhs), })
-        end
-        for i = 1, 35 do
-            local keyname = "F" .. i
-            local lhs = "<" .. keyname .. ">"
-            vim.api.nvim_buf_set_keymap(0, "i", lhs, "",
-                { noremap = true, nowait = true, callback = M:callback(lhs), })
-        end
-        vim.api.nvim_buf_set_keymap(0, "i", "<C-CR>", "",
-            { noremap = true, nowait = true, callback = M:callback("<C-CR>"), })
-        vim.api.nvim_buf_set_keymap(0, "i", "<S-CR>", "",
-            { noremap = true, nowait = true, callback = M:callback("<S-CR>"), })
-        vim.api.nvim_buf_set_keymap(0, "i", "<S-Tab>", "",
-            { noremap = true, nowait = true, callback = M:callback("<S-Tab>"), })
-        vim.api.nvim_buf_set_keymap(0, "i", "<BS>", "",
-            { noremap = true, nowait = true, callback = M:callback("<BS>"), })
-        vim.api.nvim_buf_set_keymap(0, "i", "<M-BS>", "",
-            { noremap = true, nowait = true, callback = M:callback("<M-BS>"), })
-        vim.api.nvim_buf_set_keymap(0, "i", "<C-Space>", "",
-            { noremap = true, nowait = true, callback = M:callback("<C-Space>"), })
-        vim.api.nvim_buf_set_keymap(0, "i", "<M-C-Space>", "",
-            { noremap = true, nowait = true, callback = M:callback("<M-C-Space>"), })
-        for i = 0x41, 0x5f do
-            local keyname = string.char(i)
-            local lhs = "<C-" .. keyname .. ">"
-            vim.api.nvim_buf_set_keymap(0, "i", lhs, "",
-                { noremap = true, nowait = true, callback = M:callback(lhs), })
-            lhs = "<M-C-" .. keyname .. ">"
-            vim.api.nvim_buf_set_keymap(0, "i", lhs, "",
-                { noremap = true, nowait = true, callback = M:callback(lhs), })
-        end
-        for i = 0x21, 0x7b do
-            local keyname = string.char(i)
-            local lhs = "<M-" .. keyname .. ">"
-            vim.api.nvim_buf_set_keymap(0, "i", lhs, "",
-                { noremap = true, nowait = true, callback = M:callback(lhs), })
-        end
-        vim.api.nvim_buf_set_keymap(0, "i", "<M-Bar>", "<M-Bar>", { noremap = true, nowait = true })
-        for i = 0x7d, 0x7e do
-            local keyname = string.char(i)
-            local lhs = "<M-" .. keyname .. ">"
+        for _, lhs in ipairs(M.configs.special_keys) do
             vim.api.nvim_buf_set_keymap(0, "i", lhs, "",
                 { noremap = true, nowait = true, callback = M:callback(lhs), })
         end
         M.has_set_keymaps = true
     elseif M.preedit == "" and M.has_set_keymaps == true then
-        for _, keyname in ipairs(special_keys) do
-            vim.api.nvim_buf_del_keymap(0, "i", "<" .. keyname .. ">")
-            vim.api.nvim_buf_del_keymap(0, "i", "<C-" .. keyname .. ">")
-            vim.api.nvim_buf_del_keymap(0, "i", "<M-C-" .. keyname .. ">")
-        end
-        for i = 1, 35 do
-            local keyname = "F" .. i
-            vim.api.nvim_buf_del_keymap(0, "i", "<" .. keyname .. ">")
-        end
-        vim.api.nvim_buf_del_keymap(0, "i", "<C-CR>")
-        vim.api.nvim_buf_del_keymap(0, "i", "<S-CR>")
-        vim.api.nvim_buf_del_keymap(0, "i", "<S-Tab>")
-        vim.api.nvim_buf_del_keymap(0, "i", "<BS>")
-        vim.api.nvim_buf_del_keymap(0, "i", "<M-BS>")
-        vim.api.nvim_buf_del_keymap(0, "i", "<C-Space>")
-        vim.api.nvim_buf_del_keymap(0, "i", "<M-C-Space>")
-        for i = 0x41, 0x5f do
-            local keyname = string.char(i)
-            vim.api.nvim_buf_del_keymap(0, "i", "<C-" .. keyname .. ">")
-            vim.api.nvim_buf_del_keymap(0, "i", "<M-C-" .. keyname .. ">")
-        end
-        for i = 0x21, 0x7b do
-            local keyname = string.char(i)
-            vim.api.nvim_buf_del_keymap(0, "i", "<M-" .. keyname .. ">")
-        end
-        vim.api.nvim_buf_del_keymap(0, "i", "<M-Bar>")
-        for i = 0x7d, 0x7e do
-            local keyname = string.char(i)
-            vim.api.nvim_buf_del_keymap(0, "i", "<M-" .. keyname .. ">")
+        for _, lhs in ipairs(M.configs.special_keys) do
+            vim.api.nvim_buf_del_keymap(0, "i", lhs)
         end
         M.has_set_keymaps = false
     end

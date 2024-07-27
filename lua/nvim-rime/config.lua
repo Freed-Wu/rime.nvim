@@ -36,6 +36,28 @@ for i = 0x2a, 0x7b do
     local key = string.char(i)
     table.insert(nowait_keys, key)
 end
+local special_keys = { "<C-CR>", "<S-CR>", "<S-Tab>", "<BS>", "<M-BS>", "<C-Space>", "<M-C-Space>", "<M-Bar>" }
+for _, keyname in ipairs({ "Up", "Down", "Left", "Right", "Home", "End", "PageUp", "PageDown" }) do
+    for _, lhs in ipairs({ "<" .. keyname .. ">", "<C-" .. keyname .. ">", "<M-C-" .. keyname .. ">" }) do
+        table.insert(special_keys, lhs)
+    end
+end
+for i = 1, 35 do
+    table.insert(special_keys, "<F" .. i .. ">")
+end
+for i = 0x41, 0x5f do
+    local keyname = string.char(i)
+    for _, lhs in ipairs({ "<C-" .. keyname .. ">", "<M-C-" .. keyname .. ">" }) do
+        table.insert(special_keys, lhs)
+    end
+end
+for i = 0x21, 0x7b do
+    table.insert(special_keys, "<M-" .. string.char(i) .. ">")
+end
+-- <M-Bar>
+for i = 0x7d, 0x7e do
+    table.insert(special_keys, "<M-" .. string.char(i) .. ">")
+end
 
 return {
     preedit = "",
@@ -47,7 +69,8 @@ return {
     augroup_id = 0,
     configs = {
         disable_keys = { "<Space>" },
-        nowait_keys = nowait_keys
+        nowait_keys = nowait_keys,
+        special_keys = special_keys
     },
     traits = {
         shared_data_dir = shared_data_dir,
