@@ -27,6 +27,17 @@ for _, dir in ipairs({
     end
 end
 
+local nowait_keys = { "<Bar>", "}" }
+for i = 0x21, 0x27 do
+    local key = string.char(i)
+    table.insert(nowait_keys, key)
+end
+-- ()
+for i = 0x2a, 0x7b do
+    local key = string.char(i)
+    table.insert(nowait_keys, key)
+end
+
 local M = {
     preedit = "",
     has_set_keymaps = false,
@@ -37,6 +48,7 @@ local M = {
     augroup_id = 0,
     configs = {
         disable_keys = { "<Space>" },
+        nowait_keys = nowait_keys
     },
     traits = {
         shared_data_dir = shared_data_dir,
@@ -338,15 +350,8 @@ end
 ---enable IME
 function M:enable()
     M:init()
-    vim.api.nvim_buf_set_keymap(0, "i", "<Space>", "<Space>", { noremap = true, nowait = true })
-    for i = 0x21, 0x7b do
-        local key = string.char(i)
-        vim.api.nvim_buf_set_keymap(0, "i", key, key, { noremap = true, nowait = true })
-    end
-    vim.api.nvim_buf_set_keymap(0, "i", "<Bar>", "<Bar>", { noremap = true, nowait = true })
-    for i = 0x7d, 0x7e do
-        local key = string.char(i)
-        vim.api.nvim_buf_set_keymap(0, "i", key, key, { noremap = true, nowait = true })
+    for _, nowait_key in ipairs(M.configs.nowait_keys) do
+        vim.api.nvim_buf_set_keymap(0, "i", nowait_key, nowait_key, { noremap = true, nowait = true })
     end
 
     M.augroup_id = vim.api.nvim_create_augroup("rime", {})
@@ -368,15 +373,8 @@ end
 
 ---disable IME
 function M:disable()
-    vim.api.nvim_buf_del_keymap(0, "i", "<Space>")
-    for i = 0x21, 0x7b do
-        local key = string.char(i)
-        vim.api.nvim_buf_del_keymap(0, "i", key)
-    end
-    vim.api.nvim_buf_del_keymap(0, "i", "<Bar>")
-    for i = 0x7d, 0x7e do
-        local key = string.char(i)
-        vim.api.nvim_buf_del_keymap(0, "i", key)
+    for _, nowait_key in ipairs(M.configs.nowait_keys) do
+        vim.api.nvim_buf_del_keymap(0, "i", nowait_key)
     end
 
     vim.api.nvim_del_augroup_by_id(M.augroup_id)
