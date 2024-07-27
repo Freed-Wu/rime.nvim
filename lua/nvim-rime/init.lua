@@ -36,7 +36,7 @@ local M = {
     buf_id = 0,
     augroup_id = 0,
     configs = {
-        disable_keys = { " " },
+        disable_keys = { "<Space>" },
     },
     traits = {
         shared_data_dir = shared_data_dir,
@@ -225,7 +225,7 @@ function M:draw_ui(key)
     end
     if M.preedit == "" then
         for _, disable_key in ipairs(M.configs.disable_keys) do
-            if key == disable_key then
+            if key == vim.api.nvim_replace_termcodes(disable_key, true, false, true) then
                 M:disable()
             end
         end

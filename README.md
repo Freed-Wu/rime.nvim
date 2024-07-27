@@ -116,7 +116,7 @@ for _, dir in ipairs({
 end
 require('nvim-rime').setup({
         configs = {
-            disable_keys = { " " },
+            disable_keys = { "<Space>" },
         },
         traits = {
             shared_data_dir = shared_data_dir,
