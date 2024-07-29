@@ -34,7 +34,7 @@ Rime for neovim.
 Like [coc-rime](https://github.com/tonyfettes/coc-rime).
 However, use lua not javascript.
 
-![screencast](https://github.com/user-attachments/assets/c188d2e5-d65a-4d60-92a7-a5cad993fc0e)
+![screencast](https://github.com/user-attachments/assets/71882a57-d4dd-4898-8eee-b7a17ae5193f)
 
 ## Dependence
 
