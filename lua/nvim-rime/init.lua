@@ -54,13 +54,12 @@ end
 function M:reset_keymaps()
     if M.preedit ~= "" and M.has_set_keymaps == false then
         for _, lhs in ipairs(M.keys.special) do
-            vim.api.nvim_buf_set_keymap(0, "i", lhs, "",
-                { noremap = true, nowait = true, callback = M:callback(lhs), })
+            vim.keymap.set("i", lhs, M:callback(lhs), { buffer = 0, noremap = true, nowait = true, })
         end
         M.has_set_keymaps = true
     elseif M.preedit == "" and M.has_set_keymaps == true then
         for _, lhs in ipairs(M.keys.special) do
-            vim.api.nvim_buf_del_keymap(0, "i", lhs)
+            vim.keymap.del("i", lhs, { buffer = 0 })
         end
         M.has_set_keymaps = false
     end
@@ -93,7 +92,7 @@ function M:draw_ui(key)
     end
     if M.preedit == "" then
         for _, disable_key in ipairs(M.keys.disable) do
-            if key == vim.api.nvim_replace_termcodes(disable_key, true, false, true) then
+            if key == vim.keycode(disable_key) then
                 M:disable()
             end
         end
@@ -207,7 +206,7 @@ end
 function M:enable()
     M:init()
     for _, nowait_key in ipairs(M.keys.nowait) do
-        vim.api.nvim_buf_set_keymap(0, "i", nowait_key, nowait_key, { noremap = true, nowait = true })
+        vim.keymap.set("i", nowait_key, nowait_key, { buffer = 0, noremap = true, nowait = true })
     end
 
     M.augroup_id = vim.api.nvim_create_augroup("rime", {})
@@ -230,7 +229,7 @@ end
 ---disable IME
 function M:disable()
     for _, nowait_key in ipairs(M.keys.nowait) do
-        vim.api.nvim_buf_del_keymap(0, "i", nowait_key)
+        vim.keymap.del("i", nowait_key, { buffer = 0 })
     end
 
     vim.api.nvim_del_augroup_by_id(M.augroup_id)

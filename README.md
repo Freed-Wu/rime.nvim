@@ -98,7 +98,7 @@ require('nvim-rime').setup({
 Set keymap:
 
 ```lua
-vim.api.nvim_set_keymap('i', '<C-^>', '', {noremap = true, callback = require('nvim-rime').toggle}
+vim.keymap.set('i', '<C-^>', require('nvim-rime').toggle)
 ```
 
 Once it is enabled, any printable key will be passed to rime in any case while
@@ -106,7 +106,7 @@ any non-printable key will be passed to rime only if rime window is opened. If
 you want to pass a key to rime in any case, try:
 
 ```lua
-vim.api.nvim_set_keymap('i', '<C-\\>', '', {noremap = true, callback = require('nvim-rime'):callback('<C-\\>')})
+vim.keymap.set('i', '<C-\\>', require('nvim-rime'):callback('<C-\\>'))
 ```
 
 It is useful for some key such as the key for switching input schema.
