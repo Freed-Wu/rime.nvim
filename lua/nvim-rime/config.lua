@@ -45,7 +45,14 @@ end
 for i = 1, 35 do
     table.insert(special, "<F" .. i .. ">")
 end
-for i = 0x41, 0x5f do
+for i = 0x41, 0x5a do
+    local keyname = string.char(i)
+    for _, lhs in ipairs({ "<C-" .. keyname .. ">", "<M-C-" .. keyname .. ">" }) do
+        table.insert(special, lhs)
+    end
+end
+table.insert(special, "<M-C-[>")
+for i = 0x5c, 0x5f do
     local keyname = string.char(i)
     for _, lhs in ipairs({ "<C-" .. keyname .. ">", "<M-C-" .. keyname .. ">" }) do
         table.insert(special, lhs)
