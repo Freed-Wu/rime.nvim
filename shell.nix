@@ -9,5 +9,6 @@ mkShell {
     librime
     luajit
     xmake
+    stdenv.cc
   ];
 }
