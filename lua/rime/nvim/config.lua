@@ -1,12 +1,12 @@
 local prefix = os.getenv("PREFIX") or "/usr"
 local home = os.getenv("HOME") or "."
 local shared_data_dir = ""
-for _, dir in ipairs({
+for _, dir in ipairs {
     prefix .. "/share/rime-data",
     "/usr/local/share/rime-data",
     "/run/current-system/sw/share/rime-data",
     "/sdcard/rime-data"
-}) do
+} do
     -- luacheck: ignore 113
     ---@diagnostic disable: undefined-global
     if vim.fn.isdirectory(dir) == 1 then
@@ -14,12 +14,12 @@ for _, dir in ipairs({
     end
 end
 local user_data_dir = ""
-for _, dir in ipairs({
+for _, dir in ipairs {
     home .. "/.config/ibus/rime",
     home .. "/.local/share/fcitx5/rime",
     home .. "/.config/fcitx/rime",
     home .. "/sdcard/rime"
-}) do
+} do
     if vim.fn.isdirectory(dir) == 1 then
         user_data_dir = dir
     end
@@ -36,12 +36,12 @@ for i = 0x2a, 0x7b do
     local key = string.char(i)
     table.insert(nowait, key)
 end
-local special = { "<S-Tab>", "<BS>", "<M-BS>", "<C-Space>", "<M-C-Space>", "<M-Bar>" }
-for _, keyname in ipairs({ "CR", "Del", "Up", "Down", "Left", "Right", "Home", "End", "PageUp", "PageDown" }) do
-    for _, s_keyname in ipairs({ keyname, "S-" .. keyname }) do
-        for _, c_s_keyname in ipairs({ s_keyname, "C-" .. s_keyname }) do
-            for _, lhs in ipairs({ c_s_keyname, "M-" .. c_s_keyname }) do
-                table.insert(special, "<" .. lhs .. ">")
+local special = { "<S-Esc>", "<S-Tab>", "<BS>", "<M-BS>", "<C-Space>", "<M-C-Space>", "<M-Bar>" }
+for _, name in ipairs { "Insert", "CR", "Del", "Up", "Down", "Left", "Right", "Home", "End", "PageUp", "PageDown" } do
+    for _, s_name in ipairs { name, "S-" .. name } do
+        for _, c_s_name in ipairs { s_name, "C-" .. s_name } do
+            for _, keyname in ipairs { c_s_name, "M-" .. c_s_name } do
+                table.insert(special, "<" .. keyname .. ">")
             end
         end
     end
@@ -58,7 +58,7 @@ end
 table.insert(special, "<M-C-[>")
 for i = 0x5c, 0x5f do
     local keyname = string.char(i)
-    for _, lhs in ipairs({ "<C-" .. keyname .. ">", "<M-C-" .. keyname .. ">" }) do
+    for _, lhs in ipairs { "<C-" .. keyname .. ">", "<M-C-" .. keyname .. ">" } do
         table.insert(special, lhs)
     end
 end
