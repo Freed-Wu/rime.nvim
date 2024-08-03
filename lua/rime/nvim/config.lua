@@ -36,8 +36,8 @@ for i = 0x2a, 0x7b do
     local key = string.char(i)
     table.insert(nowait, key)
 end
-local special = { "<C-CR>", "<S-CR>", "<S-Tab>", "<BS>", "<M-BS>", "<C-Space>", "<M-C-Space>", "<M-Bar>" }
-for _, keyname in ipairs({ "Up", "Down", "Left", "Right", "Home", "End", "PageUp", "PageDown" }) do
+local special = { "<S-Tab>", "<BS>", "<M-BS>", "<C-Space>", "<M-C-Space>", "<M-Bar>" }
+for _, keyname in ipairs({ "CR", "Del", "Up", "Down", "Left", "Right", "Home", "End", "PageUp", "PageDown" }) do
     for _, s_keyname in ipairs({ keyname, "S-" .. keyname }) do
         for _, c_s_keyname in ipairs({ s_keyname, "C-" .. s_keyname }) do
             for _, lhs in ipairs({ c_s_keyname, "M-" .. c_s_keyname }) do

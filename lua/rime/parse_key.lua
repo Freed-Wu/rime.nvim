@@ -1381,6 +1381,8 @@ return function(key, modifiers_)
         end
         if key == "Bs" then
             key = "BackSpace"
+        elseif key == "Del" then
+            key = "Delete"
         elseif key == "Cr" or key == "Enter" then
             key = "Return"
         elseif key == "Esc" then
