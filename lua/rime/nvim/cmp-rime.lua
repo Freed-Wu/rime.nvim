@@ -1,4 +1,4 @@
-local nvim_rime = require('nvim-rime')
+local nvim_rime = require('rime.nvim')
 
 local source = {}
 

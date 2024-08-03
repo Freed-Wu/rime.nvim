@@ -1,4 +1,4 @@
-local parse_key = require "lua.nvim-rime.parse_key"
+local parse_key = require "lua.rime.parse_key"
 
 -- luacheck: ignore 113
 ---@diagnostic disable: undefined-global

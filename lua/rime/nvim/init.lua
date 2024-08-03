@@ -1,7 +1,7 @@
 -- luacheck: ignore 112 113 212/self
 ---@diagnostic disable: undefined-global
 local rime = require "rime"
-local M = require "nvim-rime.config"
+local M = require "rime.nvim.config"
 
 
 ---setup
@@ -15,7 +15,7 @@ end
 ---@param modifiers string[]
 function M:process_key(key, modifiers)
     modifiers = modifiers or {}
-    local keycode, mask = require("nvim-rime.parse_key")(key, modifiers)
+    local keycode, mask = require("rime.parse_key")(key, modifiers)
     return rime.processKey(M.session_id, keycode, mask)
 end
 
@@ -109,45 +109,12 @@ function M:draw_ui(key)
         return
     end
     vim.v.char = ""
-    M.preedit = context.composition.preedit or ""
-    local preedit = M.preedit:sub(1, context.composition.cursor_pos) ..
-        M.ui.cursor .. M.preedit:sub(context.composition.cursor_pos + 1)
-    local candidates = context.menu.candidates
-    local candidates_ = ""
-    local indices = M.ui.indices
-    for index, _ in ipairs(candidates) do
-        local candidate = candidates[index]
-        local text = indices[index] .. " " .. candidate.text
-        if candidate.comment ~= nil then
-            text = text .. " " .. candidate.comment
-        end
-        if (context.menu.highlighted_candidate_index + 1 == index) then
-            text = M.ui.left_sep .. text
-        elseif (context.menu.highlighted_candidate_index + 2 == index) then
-            text = M.ui.right_sep .. text
-        else
-            text = " " .. text
-        end
-        candidates_ = candidates_ .. text
-    end
-    if (context.menu.num_candidates == context.menu.highlighted_candidate_index + 1) then
-        candidates_ = candidates_ .. M.ui.right_sep
-    else
-        candidates_ = candidates_ .. " "
-    end
-    local col = 0
-    local left = M.ui.left
-    if context.menu.page_no ~= 0 then
-        local num = vim.api.nvim_strwidth(left)
-        candidates_ = left .. candidates_
-        local whitespace = " "
-        preedit = whitespace:rep(num) .. preedit
-        col = col - num
-    end
-    if (context.menu.is_last_page == false and #candidates > 0) then
-        candidates_ = candidates_ .. M.ui.right
-    end
-    local lines = { preedit, candidates_ }
+
+    local lines, col = require("rime.draw_ui")(context, M.ui, vim.api.nvim_strwidth(M.ui.left))
+    M.preedit = lines[1]
+        :gsub(M.ui.cursor, "")
+        :gsub(" ", "")
+
     local width = 0
     for _, line in ipairs(lines) do
         width = math.max(vim.api.nvim_strwidth(line), width)

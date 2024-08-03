@@ -87,10 +87,10 @@ $ luarocks --lua-version 5.1 --local --tree ~/.local/share/nvim/rocks install ri
 
 ## Configure
 
-Refer [config.lua](lua/nvim-rime/config.lua):
+Refer [config.lua](lua/rime/nvim/config.lua):
 
 ```lua
-require('nvim-rime').setup({
+require('rime.nvim').setup({
     -- ...
 })
 ```
@@ -98,7 +98,7 @@ require('nvim-rime').setup({
 Set keymap:
 
 ```lua
-vim.keymap.set('i', '<C-^>', require('nvim-rime').toggle)
+vim.keymap.set('i', '<C-^>', require('rime.nvim').toggle)
 ```
 
 Once it is enabled, any printable key will be passed to rime in any case while
@@ -106,7 +106,7 @@ any non-printable key will be passed to rime only if rime window is opened. If
 you want to pass a key to rime in any case, try:
 
 ```lua
-vim.keymap.set('i', '<C-\\>', require('nvim-rime'):callback('<C-\\>'))
+vim.keymap.set('i', '<C-\\>', require('rime.nvim'):callback('<C-\\>'))
 ```
 
 It is useful for some key such as the key for switching input schema.
