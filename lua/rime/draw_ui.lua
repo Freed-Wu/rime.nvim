@@ -11,8 +11,7 @@ return function(context, ui, left_width)
     local candidates = context.menu.candidates
     local candidates_ = ""
     local indices = ui.indices
-    for index, _ in ipairs(candidates) do
-        local candidate = candidates[index]
+    for index, candidate in ipairs(candidates) do
         local text = indices[index] .. " " .. candidate.text
         if candidate.comment ~= nil then
             text = text .. " " .. candidate.comment
