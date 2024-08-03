@@ -39,7 +39,7 @@ return function(context, ui, left_width)
         preedit = whitespace:rep(num) .. preedit
         col = col - num
     end
-    if (context.menu.is_last_page == false and #candidates > 0) then
+    if (context.menu.is_last_page == false and context.menu.num_candidates > 0) then
         candidates_ = candidates_ .. ui.right
     end
     return { preedit, candidates_ }, col
