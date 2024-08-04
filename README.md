@@ -50,6 +50,11 @@ sudo pacman -S librime
 apt-get -y install librime
 # Nix
 # use nix-shell to create a virtual environment then build
+# homebrew
+brew tap tonyfettes/homebrew-rime
+brew install librime pkg-config
+# Windows msys2
+pacboy -S --noconfirm pkg-config:x librime:x gcc:x
 ```
 
 ## Install
