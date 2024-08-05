@@ -36,7 +36,7 @@ end
 ---@param key string
 function M:callback(key)
     return function()
-        if M.is_enabled then
+        if vim.b.rime_is_enabled then
             return M:draw_ui(key)
         end
     end
@@ -190,7 +190,7 @@ function M:enable()
             M:win_close()
         end
     })
-    M.is_enabled = true
+    vim.b.rime_is_enabled = true
 end
 
 ---disable IME
@@ -200,7 +200,7 @@ function M:disable()
     end
 
     vim.api.nvim_del_augroup_by_id(M.augroup_id)
-    M.is_enabled = false
+    vim.b.rime_is_enabled = false
 end
 
 ---get context with all candidates
@@ -230,7 +230,7 @@ end
 
 ---toggle IME
 function M:toggle()
-    if M.is_enabled then
+    if vim.b.rime_is_enabled then
         M:disable()
     else
         M:enable()
