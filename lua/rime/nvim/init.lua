@@ -167,6 +167,9 @@ function M:init()
         rime.init(M.traits)
         M.session_id = rime.createSession()
     end
+    if M.augroup_id == 0 then
+        M.augroup_id = vim.api.nvim_create_augroup("rime", { clear = false })
+    end
 end
 
 ---enable IME
@@ -176,7 +179,6 @@ function M:enable()
         vim.keymap.set("i", nowait_key, nowait_key, { buffer = 0, noremap = true, nowait = true })
     end
 
-    M.augroup_id = vim.api.nvim_create_augroup("rime", {})
     vim.api.nvim_create_autocmd("InsertCharPre", {
         group = M.augroup_id,
         buffer = 0,
