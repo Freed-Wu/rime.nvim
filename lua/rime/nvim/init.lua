@@ -201,7 +201,7 @@ function M:disable()
         vim.keymap.del("i", nowait_key, { buffer = 0 })
     end
 
-    vim.api.nvim_del_augroup_by_id(M.augroup_id)
+    vim.api.nvim_create_augroup("rime", {})
     vim.b.rime_is_enabled = false
 end
 
