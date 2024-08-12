@@ -168,7 +168,7 @@ function M:init()
         M.session_id = rime.createSession()
     end
     if M.augroup_id == 0 then
-        M.augroup_id = vim.api.nvim_create_augroup("rime", {})
+        M.augroup_id = vim.api.nvim_create_augroup("rime", { clear = false })
     end
 end
 
