@@ -25,7 +25,7 @@ for _, dir in ipairs {
     end
 end
 
-local nowait = { "!", "<Bar>", "}" }
+local nowait = { "!", "<Bar>", "}", "~" }
 -- "
 for i = 0x23, 0x26 do
     local key = string.char(i)
