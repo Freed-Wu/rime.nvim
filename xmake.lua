@@ -1,4 +1,5 @@
 -- luacheck: ignore 113
+---@diagnostic disable: undefined-global
 -- xmake project -k compile_commands build
 -- https://github.com/luarocks/luarocks/discussions/1695
 add_rules("mode.debug", "mode.release")
