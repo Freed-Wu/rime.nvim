@@ -1,6 +1,7 @@
 *.out
 compile_commands.json
 
+/output/
 build/
 .cache/
 .xmake/

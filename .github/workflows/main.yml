@@ -24,6 +24,8 @@ jobs:
           LUAROCKS_API_KEY: ${{secrets.LUAROCKS_API_KEY}}
         if: "! startsWith(github.ref, 'refs/tags/')"
         with:
+          dependencies: |
+            luarocks-build-xmake
           extra_luarocks_args: |
             --force
           version: scm
@@ -33,6 +35,8 @@ jobs:
           LUAROCKS_API_KEY: ${{secrets.LUAROCKS_API_KEY}}
         if: startsWith(github.ref, 'refs/tags/')
         with:
+          dependencies: |
+            luarocks-build-xmake
           extra_luarocks_args: |
             --force
           template: template.rockspec

@@ -16,13 +16,6 @@ description = {
   $license
 }
 
-external_dependencies = {
-  RIME = {
-    header = "rime_api.h",
-    library = "rime",
-  },
-}
-
 dependencies = $dependencies
 
 test_dependencies = $test_dependencies
@@ -39,25 +32,6 @@ if modrev == 'scm' or modrev == 'dev' then
 end
 
 build = {
-  type = 'builtin',
+  type = 'xmake',
   copy_directories = $copy_directories,
-  modules = {
-    rime = {
-      sources = {
-        "rime.c"
-      },
-
-      incdirs = {
-        "$(RIME_INCDIR)",
-      },
-
-      libdirs = {
-        "$(RIME_LIBDIR)",
-      },
-
-      libraries = {
-        "rime"
-      }
-    }
-  }
 }
