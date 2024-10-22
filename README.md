@@ -136,6 +136,8 @@ require('cmp').setup {
 }
 ```
 
-## Similar Projects
+## Related Projects
 
-- [zsh-rime](https://github.com/Freed-Wu/zsh-rime)
+- [A collection](https://github.com/Freed-Wu/ime.nvim) of the solutions to
+  input CJKV characters in vim
+- [A collection](https://github.com/rime/librime#frontends) of rime frontends
