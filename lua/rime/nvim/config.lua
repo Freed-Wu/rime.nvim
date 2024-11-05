@@ -1,19 +1,19 @@
-local prefix = os.getenv("PREFIX") or "/usr"
-local home = os.getenv("HOME") or "."
 local shared_data_dir = ""
+-- luacheck: ignore 113
+---@diagnostic disable: undefined-global
+local prefix = os.getenv("PREFIX") or
+    vim.fs.dirname(vim.fs.dirname(os.getenv("SHELL") or "/bin/sh"))
 for _, dir in ipairs {
     prefix .. "/share/rime-data",
-    "/usr/local/share/rime-data",
-    "/run/current-system/sw/share/rime-data",
+    prefix .. "/usr/share/rime-data",
     "/sdcard/rime-data"
 } do
-    -- luacheck: ignore 113
-    ---@diagnostic disable: undefined-global
     if vim.fn.isdirectory(dir) == 1 then
         shared_data_dir = dir
     end
 end
 local user_data_dir = ""
+local home = os.getenv("HOME") or "."
 for _, dir in ipairs {
     home .. "/.config/ibus/rime",
     home .. "/.local/share/fcitx5/rime",
