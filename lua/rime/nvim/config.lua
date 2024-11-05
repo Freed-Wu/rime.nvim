@@ -4,8 +4,10 @@ local shared_data_dir = ""
 local prefix = os.getenv("PREFIX") or
     vim.fs.dirname(vim.fs.dirname(os.getenv("SHELL") or "/bin/sh"))
 for _, dir in ipairs {
-    prefix .. "/share/rime-data",
-    prefix .. "/usr/share/rime-data",
+    -- /usr merge: /usr/bin/sh -> /usr/share/rime-data
+    vim.fs.joinpath(prefix, "share/rime-data"),
+    -- non /usr merge: /bin/sh -> /usr/share/rime-data
+    vim.fs.joinpath(prefix, "usr/share/rime-data"),
     "/sdcard/rime-data"
 } do
     if vim.fn.isdirectory(dir) == 1 then
