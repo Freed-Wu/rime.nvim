@@ -8,6 +8,7 @@ for _, dir in ipairs {
     vim.fs.joinpath(prefix, "share/rime-data"),
     -- non /usr merge: /bin/sh -> /usr/share/rime-data
     vim.fs.joinpath(prefix, "usr/share/rime-data"),
+    "/run/current-system/sw/share/rime-data",
     "/sdcard/rime-data"
 } do
     if vim.fn.isdirectory(dir) == 1 then
