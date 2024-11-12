@@ -136,6 +136,12 @@ require('cmp').setup {
 }
 ```
 
+## Tips
+
+For Nix user, run
+`/the/path/of/luarocks/rocks-5.1/rime.nvim/VERSION/scripts/update.sh` when
+dynamic link libraries are broken after `nix-collect-garbage -d`.
+
 ## Related Projects
 
 - [A collection](https://github.com/Freed-Wu/ime.nvim) of the solutions to
