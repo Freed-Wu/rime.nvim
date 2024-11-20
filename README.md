@@ -136,6 +136,35 @@ require('cmp').setup {
 }
 ```
 
+### [vim-airline](https://github.com/vim-airline/vim-airline/)
+
+In insert/replace/select/... mode, it will display current input schema name.
+
+You can customize it. Such as:
+
+Only display input schema name in insert mode:
+
+```lua
+require('rime.nvim').setup({
+  get_new_symbol = function (old, name)
+    if old == M.airline_mode_map.i
+      return name
+    end
+    return old
+  end
+})
+```
+
+See airline's `g:airline_mode_map` to know `i`, `R`, `s`, ...
+
+Disable this feature:
+
+```lua
+require('rime.nvim').setup({
+  update_status_bar = function () end
+})
+```
+
 ## Tips
 
 For Nix user, run

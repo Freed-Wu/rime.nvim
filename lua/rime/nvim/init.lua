@@ -103,6 +103,7 @@ function M:draw_ui(key)
         end
         return
     end
+    M:update_status_bar()
     local context = rime.getContext(M.session_id)
     if context.menu.num_candidates == 0 then
         M:feed_keys(M:get_commit_text())
@@ -236,6 +237,46 @@ function M:toggle()
         M:disable()
     else
         M:enable()
+    end
+    M:update_status_bar()
+end
+
+---get new airline mode map symbols, you can redefine it by M:setup()
+---@param old string
+---@param name string
+---@return string
+function M:get_new_symbol(old, name)
+    if old == M.airline_mode_map.i or old == M.airline_mode_map.ic or old == M.airline_mode_map.ix then
+        return name
+    end
+    return old .. name
+end
+
+---update status bar
+function M:update_status_bar()
+    if vim.g.airline_mode_map then
+        if M.airline_mode_map == nil then
+            M.airline_mode_map = vim.tbl_deep_extend("keep", vim.g.airline_mode_map, M.default.airline_mode_map)
+            M.g = { airline_mode_map = vim.g.airline_mode_map }
+        end
+        if not vim.b.rime_is_enabled then
+            vim.g.airline_mode_map = M.g.airline_mode_map
+        end
+        if vim.b.rime_is_enabled and M.session_id ~= 0 then
+            if M.schema_list == nil then
+                M.schema_list = rime.getSchemaList()
+            end
+            local schema_id = rime.getCurrentSchema(M.session_id)
+            for _, schema in ipairs(M.schema_list) do
+                if schema.schema_id == schema_id then
+                    for k, _ in pairs(M.default.airline_mode_map) do
+                        vim.g.airline_mode_map = vim.tbl_deep_extend("keep",
+                            { [k] = M:get_new_symbol(M.airline_mode_map[k], schema.name) }, vim.g.airline_mode_map)
+                    end
+                    break
+                end
+            end
+        end
     end
 end
 
