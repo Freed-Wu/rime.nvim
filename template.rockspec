@@ -36,13 +36,6 @@ build = {
   copy_directories = {'after', 'scripts'},
   -- https://github.com/xmake-io/luarocks-build-xmake/pull/3
   install = {
-    lua = {
-      ["rime.draw_ui"] = "lua/rime/draw_ui.lua",
-      ["rime.parse_key"] = "lua/rime/parse_key.lua",
-      ["rime.nvim.init"] = "lua/rime/nvim/init.lua",
-      ["rime.nvim.config"] = "lua/rime/nvim/config.lua",
-      ["rime.nvim.cmp-rime"] = "lua/rime/nvim/cmp-rime.lua",
-    },
     conf = {
       ['..'] = 'shell.nix'
     },
