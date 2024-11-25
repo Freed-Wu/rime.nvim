@@ -1,0 +1,2 @@
+/* after librime 1.12.0, Rime*()s are deprecated */
+${define RIME_API_DEPRECATED}
