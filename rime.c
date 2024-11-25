@@ -1,12 +1,5 @@
 #include <lauxlib.h>
-
-#include "config.h"
-
-#ifdef RIME_API_DEPRECATED
-#include <rime_api_deprecated.h>
-#else
 #include <rime_api.h>
-#endif
 
 #define DEFAULT_BUFFER_SIZE 1024
 
