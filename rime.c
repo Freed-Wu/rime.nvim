@@ -3,7 +3,7 @@
 
 #define DEFAULT_BUFFER_SIZE 1024
 
-RimeApi *rime;
+static RimeApi *rime;
 
 static int init(lua_State *L) {
   rime = rime_get_api();
