@@ -34,15 +34,7 @@ end
 target("rime")
 do
     add_includedirs(".")
-    add_rules("luarocks.module", "lua-native-object")
+    add_rules("luarocks.module", "lua-native-object", "c")
     add_files("*.nobj.lua")
     add_packages("rime")
-    -- https://github.com/xmake-io/xmake/discussions/5941#discussioncomment-11499824
-    on_load(
-        function(target)
-            local file = path.join(target:autogendir(), "empty.c")
-            os.touch(file)
-            target:add("files", file)
-        end
-    )
 end
