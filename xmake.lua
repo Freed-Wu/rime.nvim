@@ -33,7 +33,6 @@ end
 
 target("rime")
 do
-    add_includedirs(".")
     add_rules("luarocks.module", "lua-native-object", "c")
     add_files("*.nobj.lua")
     add_packages("rime")
