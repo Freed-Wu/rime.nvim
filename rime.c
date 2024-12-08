@@ -34,7 +34,7 @@ static int finalize(lua_State *L) {
   return 0;
 }
 
-static int createSession(lua_State *L) {
+static int create_session(lua_State *L) {
   RimeSessionId session_id = rime->create_session();
   if (session_id == 0)
     fputs("cannot create session", stderr);
@@ -42,7 +42,7 @@ static int createSession(lua_State *L) {
   return 1;
 }
 
-static int destroySession(lua_State *L) {
+static int destroy_session(lua_State *L) {
   RimeSessionId session_id = lua_tointeger(L, 1);
   Bool ret = rime->destroy_session(session_id);
   if (!ret)
@@ -51,7 +51,7 @@ static int destroySession(lua_State *L) {
   return 0;
 }
 
-static int getCurrentSchema(lua_State *L) {
+static int get_current_schema(lua_State *L) {
   RimeSessionId session_id = lua_tointeger(L, 1);
   char buffer[DEFAULT_BUFFER_SIZE] = "";
   if (!rime->get_current_schema(session_id, buffer, DEFAULT_BUFFER_SIZE)) {
@@ -62,7 +62,7 @@ static int getCurrentSchema(lua_State *L) {
   return 1;
 }
 
-static int getSchemaList(lua_State *L) {
+static int get_schema_list(lua_State *L) {
   RimeSchemaList schema_list = {};
   if (!rime->get_schema_list(&schema_list)) {
     fputs("cannot get schema list", stderr);
@@ -80,7 +80,7 @@ static int getSchemaList(lua_State *L) {
   return 1;
 }
 
-static int selectSchema(lua_State *L) {
+static int select_schema(lua_State *L) {
   RimeSessionId session_id = lua_tointeger(L, 1);
   Bool ret = rime->select_schema(session_id, lua_tostring(L, 2));
   if (!ret)
@@ -89,7 +89,7 @@ static int selectSchema(lua_State *L) {
   return 1;
 }
 
-static int processKey(lua_State *L) {
+static int process_key(lua_State *L) {
   RimeSessionId session_id = lua_tointeger(L, 1);
   int key = lua_tointeger(L, 2);
   int mask = lua_tointeger(L, 3);
@@ -97,7 +97,7 @@ static int processKey(lua_State *L) {
   return 1;
 }
 
-static int getContext(lua_State *L) {
+static int get_context(lua_State *L) {
   RimeSessionId session_id = lua_tointeger(L, 1);
   RIME_STRUCT(RimeContext, context);
   if (!rime->get_context(session_id, &context)) {
@@ -145,7 +145,7 @@ static int getContext(lua_State *L) {
   return 1;
 }
 
-static int getCommit(lua_State *L) {
+static int get_commit(lua_State *L) {
   RimeSessionId session_id = lua_tointeger(L, 1);
   RIME_STRUCT(RimeCommit, commit);
   if (!rime->get_commit(session_id, &commit)) {
@@ -159,28 +159,28 @@ static int getCommit(lua_State *L) {
   return 1;
 }
 
-static int commitComposition(lua_State *L) {
+static int commit_composition(lua_State *L) {
   lua_pushboolean(L, rime->commit_composition(lua_tointeger(L, 1)));
   return 1;
 }
 
-static int clearComposition(lua_State *L) {
+static int clear_composition(lua_State *L) {
   rime->clear_composition(lua_tointeger(L, 1));
   return 0;
 }
 
 static const luaL_Reg functions[] = {
     {"init", init},
-    {"createSession", createSession},
-    {"destroySession", destroySession},
-    {"getCurrentSchema", getCurrentSchema},
-    {"getSchemaList", getSchemaList},
-    {"selectSchema", selectSchema},
-    {"processKey", processKey},
-    {"getContext", getContext},
-    {"getCommit", getCommit},
-    {"commitComposition", commitComposition},
-    {"clearComposition", clearComposition},
+    {"create_session", create_session},
+    {"destroy_session", destroy_session},
+    {"get_current_schema", get_current_schema},
+    {"get_schema_list", get_schema_list},
+    {"select_schema", select_schema},
+    {"process_key", process_key},
+    {"get_context", get_context},
+    {"get_commit", get_commit},
+    {"commit_composition", commit_composition},
+    {"clear_composition", clear_composition},
     {"finalize", finalize},
     {NULL, NULL},
 };

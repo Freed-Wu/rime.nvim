@@ -16,7 +16,7 @@ end
 function M:process_key(key, modifiers)
     modifiers = modifiers or {}
     local keycode, mask = require("rime.parse_key")(key, modifiers)
-    return rime.processKey(M.session_id, keycode, mask)
+    return rime.process_key(M.session_id, keycode, mask)
 end
 
 ---process keys
@@ -44,8 +44,8 @@ end
 
 ---get rime commit
 function M:get_commit_text()
-    if rime.commitComposition(M.session_id) then
-        return rime.getCommit(M.session_id).text
+    if rime.commit_composition(M.session_id) then
+        return rime.get_commit(M.session_id).text
     end
     return ""
 end
@@ -104,7 +104,7 @@ function M:draw_ui(key)
         return
     end
     M:update_status_bar()
-    local context = rime.getContext(M.session_id)
+    local context = rime.get_context(M.session_id)
     if context.menu.num_candidates == 0 then
         M:feed_keys(M:get_commit_text())
         return
@@ -157,8 +157,8 @@ function M:win_close()
 end
 
 ---clear composition
-function M:clearComposition()
-    rime.clearComposition(M.session_id)
+function M:clear_composition()
+    rime.clear_composition(M.session_id)
 end
 
 ---initial
@@ -166,7 +166,7 @@ function M:init()
     if M.session_id == 0 then
         vim.fn.mkdir(M.traits.log_dir, "p")
         rime.init(M.traits)
-        M.session_id = rime.createSession()
+        M.session_id = rime.create_session()
     end
     if M.augroup_id == 0 then
         M.augroup_id = vim.api.nvim_create_augroup("rime", { clear = false })
@@ -189,7 +189,7 @@ function M:enable()
         group = M.augroup_id,
         buffer = 0,
         callback = function()
-            M:clearComposition()
+            M:clear_composition()
             M:win_close()
         end
     })
@@ -212,12 +212,12 @@ end
 function M:get_context_with_all_candidates(keys)
     M:init()
     M:process_keys(keys, {})
-    local context = rime.getContext(M.sessionId)
+    local context = rime.get_context(M.sessionId)
     if (keys ~= '') then
         local result = context
         while (not context.menu.is_last_page) do
             M:process_key('=', {})
-            context = rime.getContext(M.sessionId)
+            context = rime.get_context(M.sessionId)
             result.menu.num_candidates = result.menu.num_candidates + context.menu.num_candidates
             if (result.menu.select_keys and context.menu.select_keys) then
                 table.insert(result.menu.select_keys, context.menu.select_keys)
@@ -227,7 +227,7 @@ function M:get_context_with_all_candidates(keys)
             end
         end
     end
-    M:clearComposition()
+    M:clear_composition()
     return context
 end
 
@@ -264,9 +264,9 @@ function M:update_status_bar()
         end
         if vim.b.rime_is_enabled and M.session_id ~= 0 then
             if M.schema_list == nil then
-                M.schema_list = rime.getSchemaList()
+                M.schema_list = rime.get_schema_list()
             end
-            local schema_id = rime.getCurrentSchema(M.session_id)
+            local schema_id = rime.get_current_schema(M.session_id)
             for _, schema in ipairs(M.schema_list) do
                 if schema.schema_id == schema_id then
                     for k, _ in pairs(M.default.airline_mode_map) do
