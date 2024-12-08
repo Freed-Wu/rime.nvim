@@ -76,7 +76,6 @@ end
 return {
     preedit = "",
     has_set_keymaps = false,
-    session_id = 0,
     win_id = 0,
     buf_id = 0,
     augroup_id = 0,

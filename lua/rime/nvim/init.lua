@@ -16,7 +16,7 @@ end
 function M:process_key(key, modifiers)
     modifiers = modifiers or {}
     local keycode, mask = require("rime.parse_key")(key, modifiers)
-    return rime.process_key(M.session_id, keycode, mask)
+    return M.session_id:process_key(keycode, mask)
 end
 
 ---process keys
@@ -44,8 +44,8 @@ end
 
 ---get rime commit
 function M:get_commit_text()
-    if rime.commit_composition(M.session_id) then
-        return rime.get_commit(M.session_id).text
+    if M.session_id:commit_composition() then
+        return M.session_id:get_commit().text
     end
     return ""
 end
@@ -104,7 +104,7 @@ function M:draw_ui(key)
         return
     end
     M:update_status_bar()
-    local context = rime.get_context(M.session_id)
+    local context = M.session_id:get_context()
     if context.menu.num_candidates == 0 then
         M:feed_keys(M:get_commit_text())
         return
@@ -158,15 +158,17 @@ end
 
 ---clear composition
 function M:clear_composition()
-    rime.clear_composition(M.session_id)
+    M.session_id:clear_composition()
 end
 
 ---initial
 function M:init()
-    if M.session_id == 0 then
+    if M.session_id == nil then
         vim.fn.mkdir(M.traits.log_dir, "p")
-        rime.init(M.traits)
-        M.session_id = rime.create_session()
+        local traits = M.traits
+        rime.init(traits.shared_data_dir, traits.user_data_dir, traits.log_dir, traits.distribution_name,
+            traits.distribution_code_name, traits.distribution_version, traits.app_name, traits.min_log_level)
+        M.session_id = rime.RimeSessionId()
     end
     if M.augroup_id == 0 then
         M.augroup_id = vim.api.nvim_create_augroup("rime", { clear = false })
@@ -266,7 +268,7 @@ function M:update_status_bar()
             if M.schema_list == nil then
                 M.schema_list = rime.get_schema_list()
             end
-            local schema_id = rime.get_current_schema(M.session_id)
+            local schema_id = M.session_id:get_current_schema()
             for _, schema in ipairs(M.schema_list) do
                 if schema.schema_id == schema_id then
                     for k, _ in pairs(M.default.airline_mode_map) do
