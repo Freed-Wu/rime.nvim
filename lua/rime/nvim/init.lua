@@ -94,6 +94,7 @@ function M:draw_ui(key)
         for _, disable_key in ipairs(M.keys.disable) do
             if key == vim.keycode(disable_key) then
                 M:disable()
+                M:update_status_bar()
             end
         end
     end
