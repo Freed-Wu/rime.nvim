@@ -15,6 +15,7 @@ mkShell {
     (luajit.withPackages (
       p: with p; [
         busted
+        ldoc
       ]
     ))
   ];
