@@ -35,11 +35,12 @@ end
 
 build = {
   type = 'xmake',
-  copy_directories = {'after', 'scripts'},
+  copy_directories = {'after'},
   -- https://github.com/xmake-io/luarocks-build-xmake/pull/3
   install = {
     conf = {
-      ['..'] = 'shell.nix'
+      ['..'] = 'shell.nix',
+      ['../scripts/update.sh'] = 'scripts/update.sh',
     },
   },
 }
