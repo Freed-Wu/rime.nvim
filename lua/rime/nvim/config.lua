@@ -1,7 +1,7 @@
 ---default config
 local shared_data_dir = ""
--- luacheck: ignore 113
 ---@diagnostic disable: undefined-global
+-- luacheck: ignore 113
 local prefix = os.getenv("PREFIX") or
     vim.fs.dirname(vim.fs.dirname(os.getenv("SHELL") or "/bin/sh"))
 for _, dir in ipairs {
