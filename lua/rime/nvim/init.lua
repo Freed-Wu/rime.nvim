@@ -16,7 +16,7 @@ end
 ---@param modifiers string[]
 function M:process_key(key, modifiers)
     modifiers = modifiers or {}
-    local keycode, mask = require("rime.parse_key")(key, modifiers)
+    local keycode, mask = require("rime.utils").parse_key(key, modifiers)
     return M.session_id:process_key(keycode, mask)
 end
 
@@ -113,7 +113,7 @@ function M:draw_ui(key)
     end
     vim.v.char = ""
 
-    local lines, col = require("rime.draw_ui")(context, M.ui, vim.api.nvim_strwidth(M.ui.left))
+    local lines, col = require("rime.utils").draw_ui(context, M.ui, vim.api.nvim_strwidth(M.ui.left))
     M.preedit = lines[1]
         :gsub(M.ui.cursor, "")
         :gsub(" ", "")

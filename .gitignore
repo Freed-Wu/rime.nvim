@@ -1,4 +1,4 @@
-*.out
+_readthedocs/
 compile_commands.json
 
 /output/
