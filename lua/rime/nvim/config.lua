@@ -74,48 +74,63 @@ for i = 0x7d, 0x7e do
     table.insert(special, "<M-" .. string.char(i) .. ">")
 end
 
+local indices = {
+    "①", "②", "③", "④", "⑤", "⑥", "⑦", "⑧", "⑨", "⓪"
+}
+local airline_mode_map = {
+    s = "SELECT",
+    S = 'S-LINE',
+    ["\x13"] = 'S-BLOCK',
+    i = 'INSERT',
+    ic = 'INSERT COMPL GENERIC',
+    ix = 'INSERT COMPL',
+    R = 'REPLACE',
+    Rc = 'REPLACE COMP GENERIC',
+    Rv = 'V REPLACE',
+    Rx = 'REPLACE COMP',
+}
 return {
     preedit = "",
     has_set_keymaps = false,
     win_id = 0,
     buf_id = 0,
     augroup_id = 0,
+    --- config for neovim keymaps
     keys = {
-        disable = { "<Space>" },
-        nowait = nowait,
-        special = special
+        nowait = nowait,   -- keys which map <nowait>, see `help <nowait>`
+        special = special, -- keys which only be mapped when IME window is opened
+        disable = {        -- keys which will disable IME. It is useful when you input CJKV/ASCII mixedly
+            "<Space>"
+        },
     },
+    --- config for rime traits
     traits = {
-        shared_data_dir = shared_data_dir,
-        user_data_dir = user_data_dir,
-        log_dir = vim.fs.joinpath(vim.fn.stdpath("data"), "rime"),
-        distribution_name = "Rime",
-        distribution_code_name = "nvim-rime",
-        distribution_version = "0.0.1",
-        app_name = "rime.nvim-rime",
-        min_log_level = 3,
+        shared_data_dir = shared_data_dir,                         -- directory store shared data
+        user_data_dir = user_data_dir,                             -- directory store user data
+        log_dir = vim.fs.joinpath(vim.fn.stdpath("data"), "rime"), -- Directory of log files.
+        -- Value is passed to Glog library using FLAGS_log_dir variable.
+        -- NULL means temporary directory, and "" means only writing to stderr.
+        app_name = "rime.nvim-rime",                               -- Pass a C-string constant in the format "rime.x"
+        -- where 'x' is the name of your application.
+        -- Add prefix "rime." to ensure old log files are automatically cleaned.
+        min_log_level = 3,                                         -- Minimal level of logged messages.
+        -- Value is passed to Glog library using FLAGS_minloglevel variable.
+        -- 0 = INFO (default), 1 = WARNING, 2 = ERROR, 3 = FATAL
+        distribution_name = "Rime",                                -- distribution name
+        distribution_code_name = "nvim-rime",                      -- distribution code name
+        distribution_version = "0.0.1",                            -- distribution version
     },
+    --- config for neovim IME UI
     ui = {
-        indices = { "①", "②", "③", "④", "⑤", "⑥", "⑦", "⑧", "⑨", "⓪" },
-        left = "<|",
-        right = "|>",
-        left_sep = "[",
-        right_sep = "]",
-        cursor = "|",
+        left = "<|",       -- symbol for left menu
+        right = "|>",      -- symbol for right menu
+        left_sep = "[",    -- symbol for left separator
+        right_sep = "]",   -- symbol for right separator
+        cursor = "|",      -- symbol for cursor
+        indices = indices, -- symbols for indices, maximum is 10 for 1-9, 0
     },
+    --- config for default vim settings
     default = {
-        airline_mode_map =
-        {
-            s = "SELECT",
-            S = 'S-LINE',
-            ["\x13"] = 'S-BLOCK',
-            i = 'INSERT',
-            ic = 'INSERT COMPL GENERIC',
-            ix = 'INSERT COMPL',
-            R = 'REPLACE',
-            Rc = 'REPLACE COMP GENERIC',
-            Rv = 'V REPLACE',
-            Rx = 'REPLACE COMP',
-        }
+        airline_mode_map = airline_mode_map -- for vim.g.airline_mode_map, see `help airline`
     }
 }
