@@ -4,7 +4,6 @@
 local rime = require "rime"
 local M = require "rime.nvim.config"
 
-
 ---setup
 ---@param conf table
 function M:setup(conf)
