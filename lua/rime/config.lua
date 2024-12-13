@@ -1,4 +1,4 @@
----default config
+---default config. see `lua vim.print(require"rime.config")`
 local dirname = require "rime.utils".dirname
 local joinpath = require "rime.utils".joinpath
 local isdirectory = require "rime.utils".isdirectory
