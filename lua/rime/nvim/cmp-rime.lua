@@ -1,30 +1,30 @@
 ---rime support for nvim-cmp
 local nvim_rime = require('rime.nvim')
 
-local source = {}
+local M = {}
 
 ---callback
 ---@param id integer
 ---@param candidates table
-function source._callback(id, candidates)
-    source._callback_table[id]({
+function M._callback(id, candidates)
+    M._callback_table[id]({
         items = candidates,
         isIncomplete = true
     })
-    table.remove(source._callback_table, id)
+    table.remove(M._callback_table, id)
 end
 
-source._callback_table = {}
+M._callback_table = {}
 
 ---new
 ---@return table
-function source.new()
-    return setmetatable({}, { __index = source })
+function M.new()
+    return setmetatable({}, { __index = M })
 end
 
 ---get keyword pattern
 ---@return string
-function source.get_keyword_pattern()
+function M.get_keyword_pattern()
     return '\\%([!-~]\\)*'
 end
 
@@ -32,9 +32,9 @@ end
 ---complete
 ---@param request table
 ---@param callback table
-function source:complete(request, callback)
+function M:complete(request, callback)
     local keys = string.sub(request.context.cursor_before_line, request.offset)
-    source._callback_table[request.context.id] = callback
+    M._callback_table[request.context.id] = callback
     local cursor = request.context.cursor
     local context_id = request.context.id
     local menu = nvim_rime:get_context_with_all_candidates(keys).menu
@@ -61,7 +61,7 @@ function source:complete(request, callback)
         }
         table.insert(items, item)
     end
-    source._callback(context_id, items)
+    M._callback(context_id, items)
 end
 
-return source
+return M
