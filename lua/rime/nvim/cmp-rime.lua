@@ -1,4 +1,4 @@
----rime support for cmp.nvim
+---rime support for nvim-cmp
 local nvim_rime = require('rime.nvim')
 
 local source = {}
