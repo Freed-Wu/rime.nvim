@@ -92,7 +92,7 @@ $ luarocks --lua-version 5.1 --local --tree ~/.local/share/nvim/rocks install ri
 
 ## Configure
 
-Refer [config.lua](lua/rime/nvim/config.lua):
+Refer [config](https://rime-nvim.readthedocs.io/en/latest/modules/lua.rime.config.html):
 
 ```lua
 require('rime.nvim'):setup({

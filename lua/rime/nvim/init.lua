@@ -2,7 +2,7 @@
 ---@diagnostic disable: undefined-global
 -- luacheck: ignore 112 113 212/self
 local rime = require "rime"
-local M = require "rime.nvim.config"
+local M = require "rime.config"
 
 ---setup
 ---@param conf table

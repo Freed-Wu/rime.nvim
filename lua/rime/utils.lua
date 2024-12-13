@@ -1,7 +1,51 @@
 ---utilities
-local keys = require"rime.data".keys
-local modifiers = require"rime.data".modifiers
+---@diagnostic disable: undefined-global
+-- luacheck: ignore 111 113
+local keys = require "rime.data".keys
+local modifiers = require "rime.data".modifiers
 local M = {}
+
+---judge if dir is a directory
+---@param dir string
+---@return boolean
+function M.isdirectory(dir)
+    if vim then
+        return vim.fn.isdirectory(dir) == 1
+    end
+    return require "lfs".attributes(dir).mode == "directory"
+end
+
+---join two paths
+---@param dir string
+---@param file string
+---@return string
+function M.joinpath(dir, file)
+    if vim then
+        return vim.fs.joinpath(dir, file)
+    end
+    return dir .. "/" .. file
+end
+
+--- get dirname
+---@param dir string
+---@return string
+function M.dirname(dir)
+    if vim then
+        return vim.fs.dirname(dir)
+    end
+    local result, _ = dir:gsub("/[^/]+/?$", "")
+    return result
+end
+
+-- get stdpath
+---@param name
+---@return string
+function M.stdpath(name)
+    if vim then
+        return vim.fn.stdpath(name)
+    end
+    return os.getenv("HOME") or "."
+end
 
 ---parse key to keycode
 ---@param key string

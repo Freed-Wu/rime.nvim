@@ -1,18 +1,22 @@
 ---default config
+local dirname = require "rime.utils".dirname
+local joinpath = require "rime.utils".joinpath
+local isdirectory = require "rime.utils".isdirectory
+local stdpath = require "rime.utils".stdpath
 local shared_data_dir = ""
 ---@diagnostic disable: undefined-global
 -- luacheck: ignore 113
 local prefix = os.getenv("PREFIX") or
-    vim.fs.dirname(vim.fs.dirname(os.getenv("SHELL") or "/bin/sh"))
+    dirname(dirname(os.getenv("SHELL") or "/bin/sh"))
 for _, dir in ipairs {
     -- /usr merge: /usr/bin/sh -> /usr/share/rime-data
-    vim.fs.joinpath(prefix, "share/rime-data"),
+    joinpath(prefix, "share/rime-data"),
     -- non /usr merge: /bin/sh -> /usr/share/rime-data
-    vim.fs.joinpath(prefix, "usr/share/rime-data"),
+    joinpath(prefix, "usr/share/rime-data"),
     "/run/current-system/sw/share/rime-data",
     "/sdcard/rime-data"
 } do
-    if vim.fn.isdirectory(dir) == 1 then
+    if isdirectory(dir) then
         shared_data_dir = dir
     end
 end
@@ -24,7 +28,7 @@ for _, dir in ipairs {
     home .. "/.config/fcitx/rime",
     home .. "/sdcard/rime"
 } do
-    if vim.fn.isdirectory(dir) == 1 then
+    if isdirectory(dir) then
         user_data_dir = dir
     end
 end
@@ -105,20 +109,20 @@ return {
     },
     --- config for rime traits
     traits = {
-        shared_data_dir = shared_data_dir,                         -- directory store shared data
-        user_data_dir = user_data_dir,                             -- directory store user data
-        log_dir = vim.fs.joinpath(vim.fn.stdpath("data"), "rime"), -- Directory of log files.
+        shared_data_dir = shared_data_dir,           -- directory store shared data
+        user_data_dir = user_data_dir,               -- directory store user data
+        log_dir = joinpath(stdpath("data"), "rime"), -- Directory of log files.
         -- Value is passed to Glog library using FLAGS_log_dir variable.
         -- NULL means temporary directory, and "" means only writing to stderr.
-        app_name = "rime.nvim-rime",                               -- Pass a C-string constant in the format "rime.x"
+        app_name = "rime.nvim-rime", -- Pass a C-string constant in the format "rime.x"
         -- where 'x' is the name of your application.
         -- Add prefix "rime." to ensure old log files are automatically cleaned.
-        min_log_level = 3,                                         -- Minimal level of logged messages.
+        min_log_level = 3, -- Minimal level of logged messages.
         -- Value is passed to Glog library using FLAGS_minloglevel variable.
         -- 0 = INFO (default), 1 = WARNING, 2 = ERROR, 3 = FATAL
-        distribution_name = "Rime",                                -- distribution name
-        distribution_code_name = "nvim-rime",                      -- distribution code name
-        distribution_version = "0.0.1",                            -- distribution version
+        distribution_name = "Rime",           -- distribution name
+        distribution_code_name = "nvim-rime", -- distribution code name
+        distribution_version = "0.0.1",       -- distribution version
     },
     --- config for neovim IME UI
     ui = {
