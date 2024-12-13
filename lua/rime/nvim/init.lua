@@ -1,3 +1,4 @@
+---rime support for neovim
 -- luacheck: ignore 112 113 212/self
 ---@diagnostic disable: undefined-global
 local rime = require "rime"

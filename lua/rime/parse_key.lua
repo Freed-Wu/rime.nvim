@@ -1,3 +1,4 @@
+---utility function for parsing keys
 -- data {{{
 local keys = {
     space = 32,

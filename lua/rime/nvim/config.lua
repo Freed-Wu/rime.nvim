@@ -1,3 +1,4 @@
+---default config
 local shared_data_dir = ""
 -- luacheck: ignore 113
 ---@diagnostic disable: undefined-global
