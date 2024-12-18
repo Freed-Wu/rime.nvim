@@ -7,7 +7,7 @@ add_requires("rime")
 
 target("rime")
 do
-    add_rules("lua.module", "lua.native-object", "c")
+    add_rules("lua.module", "lua.native-objects", "c")
     add_files("*.nobj.lua")
     add_packages("rime")
 end
