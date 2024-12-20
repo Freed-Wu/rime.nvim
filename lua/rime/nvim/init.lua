@@ -10,9 +10,10 @@ function M:setup(conf)
     M = vim.tbl_deep_extend("keep", conf, M)
 end
 
----process key
+---process key. wrap `lua.rime.utils.parse_key`()
 ---@param key string
 ---@param modifiers string[]
+---@see process_keys
 function M:process_key(key, modifiers)
     modifiers = modifiers or {}
     local keycode, mask = require("rime.utils").parse_key(key, modifiers)
@@ -22,6 +23,7 @@ end
 ---process keys
 ---@param keys string
 ---@param modifiers string[]
+---@see process_key
 function M:process_keys(keys, modifiers)
     modifiers = modifiers or {}
     for key in keys:gmatch("(.)") do
@@ -84,7 +86,7 @@ function M:feed_keys(text)
     M:reset_keymaps()
 end
 
----draw UI
+---draw UI. wrap `lua.rime.utils.draw_ui`()
 ---@param key string
 function M:draw_ui(key)
     if key == "" then
@@ -177,6 +179,8 @@ function M:init()
 end
 
 ---enable IME
+---@see disable
+---@see toggle
 function M:enable()
     M:init()
     for _, nowait_key in ipairs(M.keys.nowait) do
@@ -200,6 +204,8 @@ function M:enable()
 end
 
 ---disable IME
+---@see enable
+---@see toggle
 function M:disable()
     for _, nowait_key in ipairs(M.keys.nowait) do
         vim.keymap.del("i", nowait_key, { buffer = 0 })
@@ -207,6 +213,18 @@ function M:disable()
 
     vim.api.nvim_create_augroup("rime", {})
     vim.b.rime_is_enabled = false
+end
+
+---toggle IME
+---@see enable
+---@see disable
+function M:toggle()
+    if vim.b.rime_is_enabled then
+        M:disable()
+    else
+        M:enable()
+    end
+    M:update_status_bar()
 end
 
 ---get context with all candidates, useful for `lua.rime.nvim.cmp`
@@ -234,17 +252,8 @@ function M:get_context_with_all_candidates(keys)
     return context
 end
 
----toggle IME
-function M:toggle()
-    if vim.b.rime_is_enabled then
-        M:disable()
-    else
-        M:enable()
-    end
-    M:update_status_bar()
-end
-
----get new airline mode map symbols, you can redefine it by `setup`()
+---get new airline mode map symbols in `update_status_bar`().
+---use `setup`() to redfine it.
 ---@param old string
 ---@param name string
 ---@return string
