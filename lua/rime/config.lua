@@ -135,6 +135,6 @@ return {
     },
     --- config for default vim settings
     default = {
-        airline_mode_map = airline_mode_map -- for vim.g.airline_mode_map, see `help airline`
+        airline_mode_map = airline_mode_map -- used by `lua.rime.nvim.update_status_bar`
     }
 }

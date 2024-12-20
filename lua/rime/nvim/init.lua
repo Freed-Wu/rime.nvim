@@ -209,7 +209,7 @@ function M:disable()
     vim.b.rime_is_enabled = false
 end
 
----get context with all candidates
+---get context with all candidates, useful for `lua.rime.nvim.cmp`
 ---@param keys string
 ---@return table
 function M:get_context_with_all_candidates(keys)
@@ -244,7 +244,7 @@ function M:toggle()
     M:update_status_bar()
 end
 
----get new airline mode map symbols, you can redefine it by M:setup()
+---get new airline mode map symbols, you can redefine it by `setup`()
 ---@param old string
 ---@param name string
 ---@return string
@@ -255,7 +255,7 @@ function M:get_new_symbol(old, name)
     return old .. name
 end
 
----update status bar
+---update status bar by `airline_mode_map`. see `help airline`.
 function M:update_status_bar()
     if vim.g.airline_mode_map then
         if M.airline_mode_map == nil then
