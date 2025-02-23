@@ -95,7 +95,7 @@ $ luarocks --lua-version 5.1 --local --tree ~/.local/share/nvim/rocks install ri
 Refer [config](https://rime-nvim.readthedocs.io/en/latest/modules/lua.rime.config.html):
 
 ```lua
-require('rime.nvim'):setup({
+require('rime.nvim').setup({
     -- ...
 })
 ```
@@ -111,7 +111,7 @@ any non-printable key will be passed to rime only if rime window is opened. If
 you want to pass a key to rime in any case, try:
 
 ```lua
-vim.keymap.set('i', '<C-\\>', require('rime.nvim'):callback('<C-\\>'))
+vim.keymap.set('i', '<C-\\>', require('rime.nvim').callback('<C-\\>'))
 ```
 
 It is useful for some key such as the key for switching input schema.
@@ -127,7 +127,7 @@ Because only printable key can be passed to rime when rime window is closed.
 Like [cmp-rime](https://github.com/Ninlives/cmp-rime):
 
 ```lua
-require('cmp'):setup {
+require('cmp').setup {
   -- ...
   sources = {
     -- ...
@@ -145,7 +145,7 @@ You can customize it. Such as:
 Only display input schema name in insert mode:
 
 ```lua
-require('rime.nvim'):setup({
+require('rime.nvim').setup({
   get_new_symbol = function (old, name)
     if old == M.airline_mode_map.i
       return name
@@ -160,7 +160,7 @@ See airline's `g:airline_mode_map` to know `i`, `R`, `s`, ...
 Disable this feature:
 
 ```lua
-require('rime.nvim'):setup({
+require('rime.nvim').setup({
   update_status_bar = function () end
 })
 ```

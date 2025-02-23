@@ -28,16 +28,17 @@ function M.get_keyword_pattern()
     return '\\%([!-~]\\)*'
 end
 
--- luacheck: ignore 212/self
 ---complete
 ---@param request table
 ---@param callback table
-function M:complete(request, callback)
+-- luacheck: ignore 212/self
+---@diagnostic disable-next-line: unused-local
+function M.complete(self, request, callback)
     local keys = string.sub(request.context.cursor_before_line, request.offset)
     M._callback_table[request.context.id] = callback
     local cursor = request.context.cursor
     local context_id = request.context.id
-    local menu = nvim_rime:get_context_with_all_candidates(keys).menu
+    local menu = nvim_rime.get_context_with_all_candidates(keys).menu
     local items = {}
     for i, candidate in ipairs(menu.candidates) do
         local item = {
