@@ -9,5 +9,6 @@ target("rime")
 do
     add_rules("lua.module", "lua.native-objects")
     add_files("*.nobj.lua")
+    add_cflags("-Wno-int-conversion")
     add_packages("rime")
 end
