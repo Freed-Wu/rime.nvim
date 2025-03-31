@@ -136,5 +136,11 @@ return {
     --- config for default vim settings
     default = {
         airline_mode_map = airline_mode_map -- used by `lua.rime.nvim.update_status_bar`
+    },
+    --- config for cursor
+    cursor = {
+        default = { bg = 'white' },
+        double_pinyin_mspy = { bg = 'red' },
+        japanese = { bg = 'yellow' }
     }
 }

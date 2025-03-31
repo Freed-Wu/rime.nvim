@@ -120,6 +120,28 @@ Once you switch to ascii mode of rime, you **cannot** switch back unless you
 have defined any hotkey to pass the key for switching ascii mode of rime to rime.
 Because only printable key can be passed to rime when rime window is closed.
 
+For cursor color,
+
+```vim
+set guicursor=n-v-c-sm:block-Cursor/lCursor,i-ci-ve:ver25-CursorIM/lCursorIM,r-cr-o:hor20-CursorIM/lCursorIM
+```
+
+```lua
+require('rime.nvim').setup({
+    cursor = {
+        default = { bg = 'white' },
+        double_pinyin_mspy = { bg = 'red' },
+        japanese = { bg = 'yellow' }
+    }
+})
+```
+
+![ASCII](https://github.com/user-attachments/assets/2e45a3b3-195e-45c9-a99a-0c49e95fda56)
+
+![MSPY](https://github.com/user-attachments/assets/05f9e142-0357-452b-b466-d25d06cdd954)
+
+![japanese](https://github.com/user-attachments/assets/706ce7a7-9aa7-4e62-8ca6-af6dde799776)
+
 ## Integration
 
 ### [nvim-cmp](https://github.com/hrsh7th/nvim-cmp)

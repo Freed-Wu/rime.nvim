@@ -96,7 +96,7 @@ function M.draw_ui(key)
         for _, disable_key in ipairs(M.keys.disable) do
             if key == vim.keycode(disable_key) then
                 M.disable()
-                M.update_status_bar()
+                M.update_IM_signatures()
             end
         end
     end
@@ -106,7 +106,7 @@ function M.draw_ui(key)
         end
         return
     end
-    M.update_status_bar()
+    M.update_IM_signatures()
     local context = M.session_id:get_context()
     if context.menu.num_candidates == 0 then
         M.feed_keys(M.get_commit_text())
@@ -224,7 +224,7 @@ function M.toggle()
     else
         M.enable()
     end
-    M.update_status_bar()
+    M.update_IM_signatures()
 end
 
 ---get context with all candidates, useful for `lua.rime.nvim.cmp`
@@ -262,6 +262,21 @@ function M.get_new_symbol(old, name)
         return name
     end
     return old .. name
+end
+
+---update IM signatures
+function M.update_IM_signatures()
+    M.update_status_bar()
+    M.update_cursor_color()
+end
+
+---update cursor color
+function M.update_cursor_color()
+    local hl = M.cursor.default
+    if vim.b.rime_is_enabled then
+        hl = M.cursor[M.session_id:get_current_schema()] or hl
+    end
+    vim.api.nvim_set_hl(0, "CursorIM", hl)
 end
 
 ---update status bar by `airline_mode_map`. see `help airline`.

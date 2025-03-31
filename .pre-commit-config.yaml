@@ -49,7 +49,7 @@ repos:
     hooks:
       - id: actionlint
   - repo: https://github.com/adrienverge/yamllint
-    rev: v1.35.1
+    rev: v1.37.0
     hooks:
       - id: yamllint
   - repo: https://github.com/executablebooks/mdformat
@@ -62,7 +62,7 @@ repos:
           - mdformat-myst
           - mdformat-toc
           - mdformat-deflist
-          - mdformat-beautysh
+          # - mdformat-beautysh
           - mdformat-ruff
           - mdformat-config
           - mdformat-web
@@ -76,7 +76,7 @@ repos:
     rev: v1.2.0
     hooks:
       - id: luacheck
-  - repo: https://github.com/NixOS/nixfmt
-    rev: 74a8d9aef93e59e7edbc4f2f59ad33fc8284bd8d
-    hooks:
-      - id: nixfmt
+  # - repo: https://github.com/NixOS/nixfmt
+  #   rev: 300657710e59990d2fd12413ccae44deb80d754a
+  #   hooks:
+  #     - id: nixfmt
