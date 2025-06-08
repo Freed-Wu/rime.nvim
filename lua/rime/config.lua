@@ -111,7 +111,7 @@ return {
     traits = {
         shared_data_dir = shared_data_dir,           -- directory store shared data
         user_data_dir = user_data_dir,               -- directory store user data
-        log_dir = joinpath(stdpath("data"), "rime"), -- Directory of log files.
+        log_dir = joinpath(stdpath("state"), "rime"), -- Directory of log files.
         -- Value is passed to Glog library using FLAGS_log_dir variable.
         -- NULL means temporary directory, and "" means only writing to stderr.
         app_name = "rime.nvim-rime", -- Pass a C-string constant in the format "rime.x"
