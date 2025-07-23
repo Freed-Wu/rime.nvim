@@ -15,9 +15,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - uses: leso-kn/gh-actions-lua@master
+        with:
+          luaVersion: "5.1"
+      - uses: hishamhm/gh-actions-luarocks@master
       - uses: xmake-io/github-action-setup-xmake@v1
       - name: Install dependencies
         run: |
+          luarocks install luanativeobjects
           sudo apt-get -y update
           sudo apt-get -y install librime-dev
       - uses: nvim-neorocks/luarocks-tag-release@v7
