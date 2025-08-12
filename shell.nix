@@ -8,7 +8,6 @@ mkShell {
   buildInputs = [
     librime
 
-    stdenv.cc
     pkg-config
     xmake
 
